@@ -6,9 +6,9 @@ export default {
     "author": "faisalnjs",
     "source": "https://faisaln.com/scripts/prefill-registration",
     "urls": [
+        "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration",
         "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/term/termSelection?mode=registration",
         "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/personaSelection/continuePersonaChange",
-        "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration",
         "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration"
     ],
     "timers": [],
@@ -21,32 +21,51 @@ export default {
         "CRN 6"
     ],
     "script": () => {
-        var stop = false;
-        var stop2 = false;
-        switch (window.location.origin + window.location.pathname) {
+        var stopSubscript = false;
+        var stopSubscript2 = false;
+        switch (window.location.href) {
+            case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration":
+                document.getElementById('registerLink').style.border = "10px transparent inset";
+                setTimeout(() => {
+                	document.getElementById('registerLink').style.border = "10px red inset";
+                }, 1000);
+                setInterval(() => {
+                	document.getElementById('registerLink').style.border = "10px transparent inset";
+                	setTimeout(() => {
+                		document.getElementById('registerLink').style.border = "10px red inset";
+                	}, 1000);
+                }, 2000);
+                break;
             case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/term/termSelection?mode=registration":
                 setInterval(() => {
-                    if (stop) return;
-                    var activateDropdown = document.getElementById("s2id_txt_term");
-                    if (activateDropdown && !activateDropdown.children[0].innerText.includes('...')) {
-                        var button = document.getElementById("term-go");
-                        if (button) {
-                            window.clearInterval(this);
-                            stop = true;
-                            setTimeout(() => {
-                                button.click();
-                            }, 100);
+                    if (!stopSubscript) {
+                        var activateDropdown = document.getElementById("s2id_txt_term");
+                        if (activateDropdown && !activateDropdown.children[0].innerText.includes('...')) {
+                            var button = document.getElementById("term-go");
+                            if (button) {
+                                window.clearInterval(this);
+                                stopSubscript = true;
+                                setTimeout(() => {
+                                    button.click();
+                                    setTimeout(() => {
+                                        if (document.querySelector('.notification-flyout-item.secondary')) {
+                                            document.querySelector('.notification-flyout-item.secondary').click();
+                                            stopSubscript = false;
+                                        };
+                                    }, 500);
+                                }, 100);
+                            };
                         };
                     };
                 }, 100);
                 break;
             case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/personaSelection/continuePersonaChange":
                 setInterval(() => {
-                    if (stop) return;
+                    if (stopSubscript) return;
                     var button = document.getElementById("continue-button");
                     if (button) {
                         window.clearInterval(this);
-                        stop = true;
+                        stopSubscript = true;
                         setTimeout(() => {
                             button.click();
                         }, 100);
@@ -56,11 +75,11 @@ export default {
             case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/classRegistration/classRegistration":
                 if (fields.find(field => String(field).trim() !== "") !== undefined) {
                     setInterval(() => {
-                        if (stop) return;
+                        if (stopSubscript) return;
                         var tab = document.getElementById("enterCRNs-tab");
                         if (tab) {
                             window.clearInterval(this);
-                            stop = true;
+                            stopSubscript = true;
                             setTimeout(() => {
                                 tab.click();
                                 for (let i = 0; i < fields.length; i++) {
@@ -82,19 +101,19 @@ export default {
                     }, 100);
                 } else {
                     setInterval(() => {
-                        if (stop) return;
+                        if (stopSubscript) return;
                         var tab = document.getElementById("loadPlans-tab");
                         if (tab) {
                             window.clearInterval(this);
-                            stop = true;
+                            stopSubscript = true;
                             setTimeout(() => {
                                 tab.click();
                                 setInterval(() => {
-                                    if (stop2) return;
+                                    if (stopSubscript2) return;
                                     var button = document.querySelector('[data-crns]');
                                     if (button) {
                                         window.clearInterval(this);
-                                        stop2 = true;
+                                        stopSubscript2 = true;
                                         setTimeout(() => {
                                             button.click();
                                             setTimeout(() => {
