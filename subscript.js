@@ -44,15 +44,11 @@ export default {
                             var button = document.getElementById("term-go");
                             if (button) {
                                 window.clearInterval(this);
-                                stopSubscript = true;
                                 setTimeout(() => {
                                     button.click();
                                     setTimeout(() => {
-                                        if (document.querySelector('.notification-flyout-item.secondary')) {
-                                            document.querySelector('.notification-flyout-item.secondary').click();
-                                            stopSubscript = false;
-                                        };
-                                    }, 500);
+                                        document.querySelector(".notification-center-shim")?.remove();
+                                    }, 100);
                                 }, 100);
                             };
                         };
