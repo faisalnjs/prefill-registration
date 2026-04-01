@@ -12,6 +12,7 @@
 // @updateURL    https://raw.githubusercontent.com/faisalnjs/prefill-registration/refs/heads/main/userscript.js
 // @downloadURL  https://raw.githubusercontent.com/faisalnjs/prefill-registration/refs/heads/main/userscript.js
 // @supportURL   https://faisaln.com
+// @source       https://faisaln.com/scripts/prefill-registration
 // ==/UserScript==
 
 (function () {
