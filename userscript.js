@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      2.1
+// @version      2.2
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -47,8 +47,10 @@
             var findingTimeTicket = false;
             var timeTicket = null;
             var failedToFindTimeTicket = false;
+            var timeTicketCountdown = null;
             setInterval(() => {
                 if (!stopSubscript && (failedToFindTimeTicket || (!findingTimeTicket && (!timeTicket || (new Date() >= (timeTicket - 10000)))))) {
+                    if (timeTicketCountdown) timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.ceil((timeTicket - new Date()) / 1000))}s at ${timeTicket.toLocaleTimeString()}. Attempting registration...`;
                     var activateDropdown = document.getElementById("s2id_txt_term");
                     if (activateDropdown) {
                         GM_addStyle(`
@@ -74,6 +76,19 @@
                                                 console.log(`Time ticket found: ${timeTicket}.`);
                                                 findingTimeTicket = false;
                                                 failedToFindTimeTicket = false;
+                                                timeTicketCountdown = document.createElement("div");
+                                                timeTicketCountdown.style.position = "fixed";
+                                                timeTicketCountdown.style.bottom = "50px";
+                                                timeTicketCountdown.style.left = "25%";
+                                                timeTicketCountdown.style.padding = "10px";
+                                                timeTicketCountdown.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+                                                timeTicketCountdown.style.color = "white";
+                                                timeTicketCountdown.style.fontSize = "16px";
+                                                timeTicketCountdown.style.borderRadius = "5px";
+                                                timeTicketCountdown.style.width = "50%";
+                                                timeTicketCountdown.style.textAlign = "center";
+                                                timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.floor((timeTicket - new Date()) / 3600000))}h ${String(Math.max(0, Math.floor((timeTicket - new Date()) % 3600000 / 60000))).padStart(2, '0')}m ${String(Math.max(0, Math.ceil((timeTicket - new Date()) / 1000) % 60)).padStart(2, '0')}s at ${timeTicket.toLocaleTimeString()}.`;
+                                                document.body.appendChild(timeTicketCountdown);
                                             };
                                         } else {
                                             findingTimeTicket = false;
@@ -91,6 +106,7 @@
                     };
                 } else if (timeTicket && (new Date() < (timeTicket - 10000))) {
                     console.log(`Time ticket will be active at ${timeTicket}.`);
+                    if (timeTicketCountdown) timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.floor((timeTicket - new Date()) / 3600000))}h ${String(Math.max(0, Math.floor((timeTicket - new Date()) % 3600000 / 60000))).padStart(2, '0')}m ${String(Math.max(0, Math.ceil((timeTicket - new Date()) / 1000) % 60)).padStart(2, '0')}s at ${timeTicket.toLocaleTimeString()}.`;
                 };
             }, 500);
             break;
@@ -169,7 +185,6 @@
         };
     };
     function useFields(fields) {
-        console.log(fields)
         if (!fields.length) return;
         stopSubscript = false;
         setInterval(() => {
