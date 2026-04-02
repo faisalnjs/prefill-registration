@@ -5,6 +5,20 @@ Automatically pre-fill course section CRNs or select a template for instant RPI 
 - `userscript.js` - TamperMonkey UserScript (or any compatible UserScript manager).
 - `subscript.js` - Subscripts subscript. Compatible only with Subscripts.
 
+## Preview
+
+### Example Registration
+
+Using an existing Plan made beforehand, Prefill attempts to register for classes before the time ticket opens.
+
+![Example Registration](example-registration.gif)
+
+### Example Modification
+
+Prefill can also be used to modify your registration after the time ticket opens.
+
+![Example Modification](example-modification.gif)
+
 ## User Guide
 
 > [!NOTE]
@@ -20,7 +34,7 @@ Automatically pre-fill course section CRNs or select a template for instant RPI 
 > For CRN prefill to work, you'll need to have a Plan set up. You can create a Plan before your registration by [clicking here](https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration), then "Plan Ahead". Follow the steps to create a new Plan. Make sure that the Plan you want is set as your Preferred Plan. Without a Plan, Prefill will do everything detailed *except* prefill (only steps 1 - 4).
 
 > [!CAUTION]
-> When creating a Plan, ensure that you have specified a specific section number to register for instead of the entire course (any section). You need to specific sections to prefill their CRNs.
+> When creating a Plan, ensure that you have specified a specific section number to register for instead of the entire course (any section). You need to specific sections to prefill their CRNs. This process is shown in the [Example Modification](#example-modification) section.
 
 > [!CAUTION]
 > Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports. If your browser does not support the Tampermonkey browser extension, use the browser console instead. Ensure [prerequisites](#prerequisites) are met before running.
@@ -32,13 +46,19 @@ Once the script is enabled via browser console or browser extension, open SIS an
 
 1. [Start here](https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration). You'll need to login with your RCSID to continue.
 2. Click "Register for Classes" as highlighted.
+
    ![Registration](registration.gif)
 3. Select the upcoming registration term from the list as violently highlighted.
+
    ![Select Term](select-term.gif)
 4. Once a term is selected, Prefill will automatically attempt to proceed with registration before your time ticket opens.
+
    ![Register For Classes](register-for-classes.gif)
 5. If a Plan has been created, Prefill will attempt to register for the classes. You'll see any conflicts or restrictions as a notification on the top-right of your screen. If there are no conflicts, your registration will be processed for you and you'll be good to go.
+
    ![Prefill Plan](prefill-plan.gif)
+
+   ![Example Registration](example-registration.gif)
 
 > [!TIP]
 > Subscripts users will have the option to enter a custom time ticket date and time to prevent spam requests and IP bans, as well as custom CRNs if Plans are not available. Subscripts is currently not in development, with plans to be released in 2027. Feel free to create a pull request against [faisalnjs/subscripts](https://github.com/faisalnjs/subscripts) to get the ball rolling. Support for Chromium and Firefox-based browsers is intended.
