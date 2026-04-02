@@ -51,11 +51,9 @@ export default {
                                 if (button) {
                                     window.clearInterval(this);
                                     stopSubscript = true;
+                                    button.click();
                                     setTimeout(() => {
-                                        button.click();
-                                        setTimeout(() => {
-                                            document.querySelector(".notification-center-shim")?.remove();
-                                        }, 100);
+                                        document.querySelector(".notification-center-shim")?.remove();
                                     }, 100);
                                 };
                             } else {
@@ -81,9 +79,7 @@ export default {
                     if (button) {
                         window.clearInterval(this);
                         stopSubscript = true;
-                        setTimeout(() => {
-                            button.click();
-                        }, 100);
+                        button.click();
                     };
                 }, 100);
                 break;
@@ -123,11 +119,9 @@ export default {
                                 if (button) {
                                     window.clearInterval(this);
                                     stopSubscript2 = true;
+                                    button.click();
                                     setTimeout(() => {
-                                        button.click();
-                                        setTimeout(() => {
-                                            document.querySelector(".notification-center-shim")?.remove();
-                                        }, 100);
+                                        document.querySelector(".notification-center-shim")?.remove();
                                     }, 100);
                                 };
                             }, 100);
@@ -172,11 +166,9 @@ export default {
                                         var saveButton = document.getElementById("saveButton");
                                         if (saveButton) {
                                             window.clearInterval(this);
+                                            saveButton.click();
                                             setTimeout(() => {
-                                                saveButton.click();
-                                                setTimeout(() => {
-                                                    document.querySelector(".notification-center-shim")?.remove();
-                                                }, 100);
+                                                document.querySelector(".notification-center-shim")?.remove();
                                             }, 100);
                                         };
                                     }, 100);

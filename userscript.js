@@ -59,11 +59,9 @@
                             var button = document.getElementById("term-go");
                             if (button) {
                                 window.clearInterval(this);
+                                button.click();
                                 setTimeout(() => {
-                                    button.click();
-                                    setTimeout(() => {
-                                        document.querySelector(".notification-center-shim")?.remove();
-                                    }, 100);
+                                    document.querySelector(".notification-center-shim")?.remove();
                                 }, 100);
                             };
                         } else {
@@ -89,9 +87,7 @@
                 if (button) {
                     window.clearInterval(this);
                     stopSubscript = true;
-                    setTimeout(() => {
-                        button.click();
-                    }, 100);
+                    button.click();
                 };
             }, 100);
             break;
@@ -132,11 +128,9 @@
                             if (button) {
                                 window.clearInterval(this);
                                 stopSubscript2 = true;
+                                button.click();
                                 setTimeout(() => {
-                                    button.click();
-                                    setTimeout(() => {
-                                        document.querySelector(".notification-center-shim")?.remove();
-                                    }, 100);
+                                    document.querySelector(".notification-center-shim")?.remove();
                                 }, 100);
                             };
                         }, 100);
@@ -181,11 +175,9 @@
                                     var saveButton = document.getElementById("saveButton");
                                     if (saveButton) {
                                         window.clearInterval(this);
+                                        saveButton.click();
                                         setTimeout(() => {
-                                            saveButton.click();
-                                            setTimeout(() => {
-                                                document.querySelector(".notification-center-shim")?.remove();
-                                            }, 100);
+                                            document.querySelector(".notification-center-shim")?.remove();
                                         }, 100);
                                     };
                                 }, 100);
