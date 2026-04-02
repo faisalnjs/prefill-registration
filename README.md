@@ -25,6 +25,9 @@ Automatically pre-fill course section CRNs or select a template for instant RPI 
 > [!CAUTION]
 > Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports, and the script is browser extension dependent. Ensure [prerequisites](#prerequisites) are met before running.
 
+> [!NOTE]
+> Prefill keeps your SIS Registration session open and active while the script is enabled. Nobody likes it when SIS logs you out.
+
 Once the script is enabled via browser console or browser extension, open SIS and attempt to register for classes before your Time Ticket opens.
 
 1. [Start here](https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration). You'll need to login with your RCSID to continue.

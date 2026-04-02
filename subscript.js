@@ -192,6 +192,9 @@ export default {
                 };
             }, 100);
         };
+        if (typeof inactivityTimer !== "undefined") setInterval(() => {
+            inactivityTimer.reset();
+        }, 60000);
         return;
     }
 };
