@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      2.3
+// @version      2.9
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -42,6 +42,11 @@
             break;
         case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration/registration":
             registration();
+            break;
+        case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/plan/selectPlan":
+            setTimeout(() => {
+                document.querySelectorAll('.strong').forEach(createdBy => createdBy.innerHTML = createdBy.innerHTML.replaceAll("Preferred", "Prefill Preferred"));
+            }, 1000);
             break;
         case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/term/termSelection?mode=registration":
             var findingTimeTicket = false;
@@ -167,18 +172,7 @@
                                     setTimeout(() => {
                                         document.querySelector(".notification-center-shim")?.remove();
                                     }, 100);
-                                    setInterval(() => {
-                                        var saveButton = document.getElementById("saveButton");
-                                        if (saveButton) {
-                                            window.clearInterval(this);
-                                            setTimeout(() => {
-                                                saveButton.click();
-                                                setTimeout(() => {
-                                                    document.querySelector(".notification-center-shim")?.remove();
-                                                }, 100);
-                                            }, 100);
-                                        };
-                                    }, 100);
+                                    afterCRNsAdded();
                                 }, 100);
                             };
                         }, 100);
@@ -197,10 +191,13 @@
                         useFields(planCourses);
                     });
                 };
-            }, 1000);
+            }, 2500);
         } else if ((typeof fields !== "undefined") && (fields.find(field => String(field).trim() !== "") !== undefined)) {
             useFields(fields);
         };
+        setTimeout(() => {
+            document.querySelectorAll('.created-by').forEach(createdBy => createdBy.innerHTML = createdBy.innerHTML.replaceAll("Preferred", "Prefill Preferred"));
+        }, 1000);
     };
     function useFields(fields) {
         if (!fields.length) return;
@@ -219,16 +216,7 @@
                             document.getElementById(`txt_crn${i + 1}`).value = CRN;
                             if (i === (fields.length - 1)) {
                                 document.getElementById("addCRNbutton")?.click();
-                                setInterval(() => {
-                                    var saveButton = document.getElementById("saveButton");
-                                    if (saveButton) {
-                                        window.clearInterval(this);
-                                        saveButton.click();
-                                        setTimeout(() => {
-                                            document.querySelector(".notification-center-shim")?.remove();
-                                        }, 100);
-                                    };
-                                }, 100);
+                                afterCRNsAdded();
                             } else {
                                 document.getElementById("addAnotherCRN")?.click();
                             };
@@ -244,4 +232,41 @@
     if (typeof inactivityTimer !== "undefined") setInterval(() => {
         inactivityTimer.reset();
     }, 60000);
+    var alreadyRegistered = false;
+    var alreadyWaitlisted = false;
+    function afterCRNsAdded() {
+        var saveButton = document.getElementById("saveButton");
+        if (saveButton) {
+            window.clearInterval(this);
+            saveButton.click();
+            setTimeout(() => {
+                document.querySelector(".notification-center-shim")?.remove();
+            }, 100);
+            if (!alreadyRegistered || !alreadyWaitlisted) setTimeout(() => {
+                if (!alreadyRegistered && Array.from(document.querySelectorAll(".notification-flyout-item.notification-message")).find(notification => notification.innerText.includes("Section is a duplicate of an existing registration."))) {
+                    alreadyRegistered = true;
+                    afterCRNsAdded();
+                    return;
+                };
+                if (!alreadyWaitlisted) setTimeout(() => {
+                    var notifications = Array.from(document.querySelectorAll(".notification-flyout-item.notification-message")).filter(notification => notification.innerText.includes(" Waitlisted"));
+                    if (notifications.length) {
+                        var CRNsToWaitlist = notifications.map(notification => notification.innerText.split("CRN ")[1].split(":")[0]);
+                        if (CRNsToWaitlist.length) {
+                            console.log("Attempting to waitlist CRNs: ", CRNsToWaitlist);
+                            for (let i = 0; i < CRNsToWaitlist.length; i++) {
+                                var CRN = CRNsToWaitlist[i];
+                                var internalCourseID = Array.from(document.querySelectorAll("#summaryBody [data-property='courseReferenceNumber']")).find(course => course.innerText == CRN).getAttribute("data-id");
+                                collectionToCheckForDirty[0].models.find(m => m.id == internalCourseID)._dirty = true;
+                                collectionToCheckForDirty[0].models.find(m => m.id == internalCourseID).attributes.selectedAction = "WL";
+                            };
+                            alreadyWaitlisted = true;
+                            saveButton.disabled = false;
+                            afterCRNsAdded();
+                        };
+                    };
+                }, 100);
+            }, 500);
+        };
+    };
 })();
