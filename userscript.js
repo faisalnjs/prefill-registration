@@ -6,8 +6,6 @@
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
 // @icon         https://faisaln.com/logo.png
-// @grant        GM_xmlhttpRequest
-// @grant        unsafeWindow
 // @grant        GM_addStyle
 // @updateURL    https://raw.githubusercontent.com/faisalnjs/prefill-registration/refs/heads/main/userscript.js
 // @downloadURL  https://raw.githubusercontent.com/faisalnjs/prefill-registration/refs/heads/main/userscript.js

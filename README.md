@@ -17,10 +17,10 @@ Automatically pre-fill course section CRNs or select a template for instant RPI 
 > Press and hold your Escape key at any time to stop Prefill. Re-activate by reloading the page.
 
 > [!TIP]
-> For CRN prefill to work, you'll need to have a plan set up. You can create a plan before your registration by [clicking here](https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration), then "Plan Ahead". Follow the steps to create a new plan. Make sure that the plan you want is set as your preferred plan. Without a plan, Prefill will do everything detailed *except* prefill (only steps 1 - 4).
+> For CRN prefill to work, you'll need to have a Plan set up. You can create a Plan before your registration by [clicking here](https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration), then "Plan Ahead". Follow the steps to create a new Plan. Make sure that the Plan you want is set as your Preferred Plan. Without a Plan, Prefill will do everything detailed *except* prefill (only steps 1 - 4).
 
 > [!CAUTION]
-> When creating a plan, ensure that you have specified a specific section number to register for instead of the entire course (any section). You need to specific sections to prefill their CRNs.
+> When creating a Plan, ensure that you have specified a specific section number to register for instead of the entire course (any section). You need to specific sections to prefill their CRNs.
 
 > [!CAUTION]
 > Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports. If your browser does not support the Tampermonkey browser extension, use the browser console instead. Ensure [prerequisites](#prerequisites) are met before running.
@@ -37,11 +37,11 @@ Once the script is enabled via browser console or browser extension, open SIS an
    ![Select Term](select-term.gif)
 4. Once a term is selected, Prefill will automatically attempt to proceed with registration before your time ticket opens.
    ![Register For Classes](register-for-classes.gif)
-5. If a plan has been created, Prefill will attempt to register for the classes. You'll see any conflicts or restrictions as a notification on the top-right of your screen. If there are no conflicts, your registration will be processed for you and you'll be good to go.
+5. If a Plan has been created, Prefill will attempt to register for the classes. You'll see any conflicts or restrictions as a notification on the top-right of your screen. If there are no conflicts, your registration will be processed for you and you'll be good to go.
    ![Prefill Plan](prefill-plan.gif)
 
 > [!TIP]
-> Subscripts users will have the option to enter a custom time ticket date and time to prevent spam requests and IP bans. Subscripts is currently not in development, with plans to be released in 2027. Feel free to create a pull request against [faisalnjs/subscripts](https://github.com/faisalnjs/subscripts) to get the ball rolling. Support for Chromium and Firefox-based browsers is intended.
+> Subscripts users will have the option to enter a custom time ticket date and time to prevent spam requests and IP bans, as well as custom CRNs if Plans are not available. Subscripts is currently not in development, with plans to be released in 2027. Feel free to create a pull request against [faisalnjs/subscripts](https://github.com/faisalnjs/subscripts) to get the ball rolling. Support for Chromium and Firefox-based browsers is intended.
 
 ## Prerequisites
 
@@ -76,9 +76,7 @@ Once the script is enabled via browser console or browser extension, open SIS an
 
 Prefill requires the following Tampermonkey permissions:
 
-- `GM_xmlhttpRequest` - used to fetch the preferred plan when needed.
 - `GM_addStyle` - injects CSS to hide some spinners, notifications, and errors.
-- `unsafeWindow` - used to interact with the page context when necessary.
 
 ## Security & privacy
 
@@ -87,4 +85,4 @@ Prefill requires the following Tampermonkey permissions:
 
 ## Author
 
-(c) 2026 Faisal N - [faisaln.com](https://faisaln.com)
+Copyright © 2026 Faisal N - [faisaln.com](https://faisaln.com)
