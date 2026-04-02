@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      1.4
+// @version      1.5
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -145,7 +145,7 @@
                         const plans = (text.split('window.bootstraps = ')[1].split('];')[0] + ']').split('plans:')[1].split('selectPlanConfig')[0].trim().slice(0, -1);
                         const plansJSON = JSON.parse(plans);
                         const preferredPlan = plansJSON.find(plan => plan.preferredIndicator);
-                        const planCourses = preferredPlan.planCourses.map(course => course.courseReferenceNumber);
+                        const planCourses = preferredPlan.planCourses.filter(course => course.courseReferenceNumber !== null).map(course => Number(course.courseReferenceNumber));
                         useFields(planCourses);
                     });
                 };
@@ -155,6 +155,7 @@
         };
     };
     function useFields(fields) {
+        console.log(fields)
         if (!fields.length) return;
         stopSubscript = false;
         setInterval(() => {

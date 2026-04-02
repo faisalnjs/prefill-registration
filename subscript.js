@@ -136,7 +136,7 @@ export default {
                             const plans = (text.split('window.bootstraps = ')[1].split('];')[0] + ']').split('plans:')[1].split('selectPlanConfig')[0].trim().slice(0, -1);
                             const plansJSON = JSON.parse(plans);
                             const preferredPlan = plansJSON.find(plan => plan.preferredIndicator);
-                            const planCourses = preferredPlan.planCourses.map(course => course.courseReferenceNumber);
+                            const planCourses = preferredPlan.planCourses.filter(course => course.courseReferenceNumber !== null).map(course => Number(course.courseReferenceNumber));
                             useFields(planCourses);
                         });
                     };
