@@ -1,3 +1,5 @@
+![Prefill Registration](banner.png)
+
 # Prefill Registration
 
 Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
