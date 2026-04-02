@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      1.5
+// @version      2.0
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -46,8 +46,11 @@
             registration();
             break;
         case "https://sis9.rpi.edu/StudentRegistrationSsb/ssb/term/termSelection?mode=registration":
+            var findingTimeTicket = false;
+            var timeTicket = null;
+            var failedToFindTimeTicket = false;
             setInterval(() => {
-                if (!stopSubscript) {
+                if (!stopSubscript && (failedToFindTimeTicket || (!findingTimeTicket && (!timeTicket || (new Date() >= (timeTicket - 10000)))))) {
                     var activateDropdown = document.getElementById("s2id_txt_term");
                     if (activateDropdown) {
                         GM_addStyle(`
@@ -63,20 +66,33 @@
                                 setTimeout(() => {
                                     document.querySelector(".notification-center-shim")?.remove();
                                 }, 100);
+                                if (!timeTicket) {
+                                    findingTimeTicket = true;
+                                    setTimeout(() => {
+                                        var notification = Array.from(document.querySelectorAll(".notification-flyout-item.notification-message")).find(notification => notification.innerText.includes("You can register from "));
+                                        if (notification) {
+                                            timeTicket = new Date(notification.innerText.split("from ")[1].split(" to")[0]);
+                                            if (timeTicket) {
+                                                console.log(`Time ticket found: ${timeTicket}.`);
+                                                findingTimeTicket = false;
+                                                failedToFindTimeTicket = false;
+                                            };
+                                        } else {
+                                            findingTimeTicket = false;
+                                            failedToFindTimeTicket = true;
+                                        };
+                                    }, 100);
+                                };
                             };
                         } else {
                             activateDropdown.style.border = "10px transparent inset";
                             setTimeout(() => {
                                 activateDropdown.style.border = "10px red inset";
                             }, 1000);
-                            setInterval(() => {
-                                activateDropdown.style.border = "10px transparent inset";
-                                setTimeout(() => {
-                                    activateDropdown.style.border = "10px red inset";
-                                }, 1000);
-                            }, 2000);
                         };
                     };
+                } else if (timeTicket && (new Date() < (timeTicket - 10000))) {
+                    console.log(`Time ticket will be active at ${timeTicket}.`);
                 };
             }, 500);
             break;

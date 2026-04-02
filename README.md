@@ -23,7 +23,7 @@ Automatically pre-fill course section CRNs or select a template for instant RPI 
 > When creating a plan, ensure that you have specified a specific section number to register for instead of the entire course (any section). You need to specific sections to prefill their CRNs.
 
 > [!CAUTION]
-> Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports, and the script is browser extension dependent. Ensure [prerequisites](#prerequisites) are met before running.
+> Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports. If your browser does not support the Tampermonkey browser extension, use the browser console instead. Ensure [prerequisites](#prerequisites) are met before running.
 
 > [!NOTE]
 > Prefill keeps your SIS Registration session open and active while the script is enabled. Nobody likes it when SIS logs you out.
@@ -35,13 +35,13 @@ Once the script is enabled via browser console or browser extension, open SIS an
    ![Registration](registration.gif)
 3. Select the upcoming registration term from the list as violently highlighted.
    ![Select Term](select-term.gif)
-4. Once a term is selected, Prefill will automatically attempt to proceed with registration as soon as your time ticket opens.
+4. Once a term is selected, Prefill will automatically attempt to proceed with registration before your time ticket opens.
    ![Register For Classes](register-for-classes.gif)
 5. If a plan has been created, Prefill will attempt to register for the classes. You'll see any conflicts or restrictions as a notification on the top-right of your screen. If there are no conflicts, your registration will be processed for you and you'll be good to go.
    ![Prefill Plan](prefill-plan.gif)
 
 > [!TIP]
-> Subscripts users will have the option to enter a time ticket date and time to prevent spam requests and IP bans. Subscripts is currently not in development, with plans to be released in 2027. Feel free to create a pull request against [faisalnjs/subscripts](https://github.com/faisalnjs/subscripts) to get the ball rolling. Support for Chromium and Firefox-based browsers is intended.
+> Subscripts users will have the option to enter a custom time ticket date and time to prevent spam requests and IP bans. Subscripts is currently not in development, with plans to be released in 2027. Feel free to create a pull request against [faisalnjs/subscripts](https://github.com/faisalnjs/subscripts) to get the ball rolling. Support for Chromium and Firefox-based browsers is intended.
 
 ## Prerequisites
 
