@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      2.2
+// @version      2.3
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -62,40 +62,42 @@
                             var button = document.getElementById("term-go");
                             if (button) {
                                 window.clearInterval(this);
-                                button.click();
                                 setTimeout(() => {
-                                    document.querySelector(".notification-center-shim")?.remove();
-                                }, 100);
-                                if (!timeTicket) {
-                                    findingTimeTicket = true;
+                                    button.click();
                                     setTimeout(() => {
-                                        var notification = Array.from(document.querySelectorAll(".notification-flyout-item.notification-message")).find(notification => notification.innerText.includes("You can register from "));
-                                        if (notification) {
-                                            timeTicket = new Date(notification.innerText.split("from ")[1].split(" to")[0]);
-                                            if (timeTicket) {
-                                                console.log(`Time ticket found: ${timeTicket}.`);
-                                                findingTimeTicket = false;
-                                                failedToFindTimeTicket = false;
-                                                timeTicketCountdown = document.createElement("div");
-                                                timeTicketCountdown.style.position = "fixed";
-                                                timeTicketCountdown.style.bottom = "50px";
-                                                timeTicketCountdown.style.left = "25%";
-                                                timeTicketCountdown.style.padding = "10px";
-                                                timeTicketCountdown.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-                                                timeTicketCountdown.style.color = "white";
-                                                timeTicketCountdown.style.fontSize = "16px";
-                                                timeTicketCountdown.style.borderRadius = "5px";
-                                                timeTicketCountdown.style.width = "50%";
-                                                timeTicketCountdown.style.textAlign = "center";
-                                                timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.floor((timeTicket - new Date()) / 3600000))}h ${String(Math.max(0, Math.floor((timeTicket - new Date()) % 3600000 / 60000))).padStart(2, '0')}m ${String(Math.max(0, Math.ceil((timeTicket - new Date()) / 1000) % 60)).padStart(2, '0')}s at ${timeTicket.toLocaleTimeString()}.`;
-                                                document.body.appendChild(timeTicketCountdown);
-                                            };
-                                        } else {
-                                            findingTimeTicket = false;
-                                            failedToFindTimeTicket = true;
-                                        };
+                                        document.querySelector(".notification-center-shim")?.remove();
                                     }, 100);
-                                };
+                                    if (!timeTicket) {
+                                        findingTimeTicket = true;
+                                        setTimeout(() => {
+                                            var notification = Array.from(document.querySelectorAll(".notification-flyout-item.notification-message")).find(notification => notification.innerText.includes("You can register from "));
+                                            if (notification) {
+                                                timeTicket = new Date(notification.innerText.split("from ")[1].split(" to")[0]);
+                                                if (timeTicket) {
+                                                    console.log(`Time ticket found: ${timeTicket}.`);
+                                                    findingTimeTicket = false;
+                                                    failedToFindTimeTicket = false;
+                                                    timeTicketCountdown = document.createElement("div");
+                                                    timeTicketCountdown.style.position = "fixed";
+                                                    timeTicketCountdown.style.bottom = "50px";
+                                                    timeTicketCountdown.style.left = "25%";
+                                                    timeTicketCountdown.style.padding = "10px";
+                                                    timeTicketCountdown.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+                                                    timeTicketCountdown.style.color = "white";
+                                                    timeTicketCountdown.style.fontSize = "16px";
+                                                    timeTicketCountdown.style.borderRadius = "5px";
+                                                    timeTicketCountdown.style.width = "50%";
+                                                    timeTicketCountdown.style.textAlign = "center";
+                                                    timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.floor((timeTicket - new Date()) / 3600000))}h ${String(Math.max(0, Math.floor((timeTicket - new Date()) % 3600000 / 60000))).padStart(2, '0')}m ${String(Math.max(0, Math.ceil((timeTicket - new Date()) / 1000) % 60)).padStart(2, '0')}s at ${timeTicket.toLocaleTimeString()}.`;
+                                                    document.body.appendChild(timeTicketCountdown);
+                                                };
+                                            } else {
+                                                findingTimeTicket = false;
+                                                failedToFindTimeTicket = true;
+                                            };
+                                        }, 100);
+                                    };
+                                }, 100);
                             };
                         } else {
                             activateDropdown.style.border = "10px transparent inset";
@@ -117,7 +119,9 @@
                 if (button) {
                     window.clearInterval(this);
                     stopSubscript = true;
-                    button.click();
+                    setTimeout(() => {
+                        button.click();
+                    }, 100);
                 };
             }, 100);
             break;
@@ -158,9 +162,23 @@
                             if (button) {
                                 window.clearInterval(this);
                                 stopSubscript2 = true;
-                                button.click();
                                 setTimeout(() => {
-                                    document.querySelector(".notification-center-shim")?.remove();
+                                    button.click();
+                                    setTimeout(() => {
+                                        document.querySelector(".notification-center-shim")?.remove();
+                                    }, 100);
+                                    setInterval(() => {
+                                        var saveButton = document.getElementById("saveButton");
+                                        if (saveButton) {
+                                            window.clearInterval(this);
+                                            setTimeout(() => {
+                                                saveButton.click();
+                                                setTimeout(() => {
+                                                    document.querySelector(".notification-center-shim")?.remove();
+                                                }, 100);
+                                            }, 100);
+                                        };
+                                    }, 100);
                                 }, 100);
                             };
                         }, 100);
