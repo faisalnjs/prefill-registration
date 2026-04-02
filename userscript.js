@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      1.2
+// @version      1.3
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -59,7 +59,6 @@
                             var button = document.getElementById("term-go");
                             if (button) {
                                 window.clearInterval(this);
-                                stopSubscript = true;
                                 setTimeout(() => {
                                     button.click();
                                     setTimeout(() => {

@@ -115,7 +115,6 @@ export default {
                     var tab = document.getElementById("loadPlans-tab");
                     if (tab) {
                         window.clearInterval(this);
-                        stopSubscript = true;
                         setTimeout(() => {
                             tab.click();
                             setInterval(() => {
