@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Prefill Registration
 // @namespace    https://faisaln.com/scripts/prefill-registration
-// @version      3.1
+// @version      3.2
 // @description  Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
 // @author       Faisal N
 // @match        https://sis9.rpi.edu/StudentRegistrationSsb*
@@ -96,6 +96,15 @@
                                                     timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.floor((timeTicket - new Date()) / 3600000))}h ${String(Math.max(0, Math.floor((timeTicket - new Date()) % 3600000 / 60000))).padStart(2, '0')}m ${String(Math.max(0, Math.ceil((timeTicket - new Date()) / 1000) % 60)).padStart(2, '0')}s at ${timeTicket.toLocaleTimeString()}.`;
                                                     document.body.appendChild(timeTicketCountdown);
                                                 };
+                                                setInterval(() => {
+                                                    $.ajax({
+                                                        url: $("meta[name='keepAliveURL']").attr("content"),
+                                                        dataType: "html",
+                                                        success: function (data, textStatus, jqXHR) {
+                                                            inactivityTimer.reset();
+                                                        }
+                                                    });
+                                                }, 25000);
                                             } else {
                                                 findingTimeTicket = false;
                                                 failedToFindTimeTicket = true;

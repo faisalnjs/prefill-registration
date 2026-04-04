@@ -1,6 +1,6 @@
 export default {
     "id": "prefill-registration",
-    "version": "1.0.0",
+    "version": "3.2",
     "name": "Prefill Registration",
     "description": "Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.",
     "author": "faisalnjs",
@@ -90,6 +90,15 @@ export default {
                                                         timeTicketCountdown.innerText = `Time ticket will be active in ${Math.max(0, Math.floor((timeTicket - new Date()) / 3600000))}h ${String(Math.max(0, Math.floor((timeTicket - new Date()) % 3600000 / 60000))).padStart(2, '0')}m ${String(Math.max(0, Math.ceil((timeTicket - new Date()) / 1000) % 60)).padStart(2, '0')}s at ${timeTicket.toLocaleTimeString()}.`;
                                                         document.body.appendChild(timeTicketCountdown);
                                                     };
+                                                    setInterval(() => {
+                                                        $.ajax({
+                                                            url: $("meta[name='keepAliveURL']").attr("content"),
+                                                            dataType: "html",
+                                                            success: function (data, textStatus, jqXHR) {
+                                                                inactivityTimer.reset();
+                                                            }
+                                                        });
+                                                    }, 25000);
                                                 } else {
                                                     findingTimeTicket = false;
                                                     failedToFindTimeTicket = true;

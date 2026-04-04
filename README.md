@@ -42,7 +42,7 @@ Prefill can also be used to modify your registration after the time ticket opens
 > Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports. If your browser does not support the Tampermonkey browser extension, use the browser console instead. Ensure [prerequisites](#prerequisites) are met before running.
 
 > [!NOTE]
-> Prefill keeps your SIS Registration session open and active while the script is enabled. Nobody likes it when SIS logs you out.
+> Prefill keeps your SIS Registration session open and active while the script is enabled. Nobody likes it when SIS logs you out. Note that this does not prevent you from being logged out by RPI's Shibboleth SSO which is inevitable.
 
 Once the script is enabled via browser console or browser extension, open SIS and attempt to register for classes before your Time Ticket opens.
 
