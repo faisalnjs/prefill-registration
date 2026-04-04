@@ -94,7 +94,7 @@ export default {
                                                     findingTimeTicket = false;
                                                     failedToFindTimeTicket = true;
                                                 };
-                                            }, 100);
+                                            }, 5000);
                                         };
                                     }, 100);
                                 };
