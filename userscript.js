@@ -15,7 +15,7 @@
 
 (function () {
     'use strict';
-    GM_addStyle(`
+    if (GM_addStyle && (typeof GM_addStyle === 'function')) GM_addStyle(`
         #spinner, .loading, .notification-center-shim {
             display: none !important;
         }

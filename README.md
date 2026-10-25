@@ -2,7 +2,7 @@
 
 # Prefill Registration
 
-Automatically pre-fill course section CRNs or select a template for instant RPI class registration when your time ticket is activated.
+Automatically pre-fill course section CRNs or select a template for instant class registration when your time ticket is activated.
 
 - `userscript.js` - TamperMonkey UserScript (or any compatible UserScript manager).
 - `subscript.js` - Subscripts subscript. Compatible only with Subscripts.
@@ -23,11 +23,14 @@ Prefill can also be used to modify your registration after the time ticket opens
 
 ## User Guide
 
+> [!IMPORTANT]
+> This script is for Ellucian's SIS only. It is not compatible with other SIS platforms. It is not restricted to RPI, but it is only tested on RPI's version of Ellucian SIS. If you are on a different campus, please test the script in a safe environment before using it for your registration. If you are using the script outside of RPI, modify all URLs in the script to match your SIS platform's URLs.
+
 > [!NOTE]
 > Prefill will automatically assume your role is Student and save you a few clicks as you navigate around SIS. If you are a non-student, do not use this script.
 
 > [!NOTE]
-> Prefill will only be active on SIS registration pages. The script will not run on other pages for security. Paranoids may choose to exclude Prefill from accessing outside of `https://sis9.rpi.edu/StudentRegistrationSsb*`.
+> Prefill will only be active on Ellucian SIS registration pages. The script will not run on other pages for security. Paranoids may choose to exclude Prefill from accessing outside of `https://sis9.rpi.edu/StudentRegistrationSsb*`.
 
 > [!IMPORTANT]
 > Press and hold your Escape key at any time to stop Prefill. Re-activate by reloading the page.
@@ -42,9 +45,9 @@ Prefill can also be used to modify your registration after the time ticket opens
 > Prefill has been tested on Chromium and Firefox-based browsers. It should work on all browsers that SIS supports. If your browser does not support the Tampermonkey browser extension, use the browser console instead. Ensure [prerequisites](#prerequisites) are met before running.
 
 > [!NOTE]
-> Prefill keeps your SIS Registration session open and active while the script is enabled. Nobody likes it when SIS logs you out. Note that this does not prevent you from being logged out by RPI's Shibboleth SSO which is inevitable.
+> Nobody likes it when Ellucian SIS logs you out in the middle of your work. Prefill keeps your Ellucian SIS Registration session open and active while the script is enabled. Note that this does not prevent you from being logged out by RPI's Shibboleth SSO which is inevitable.
 
-Once the script is enabled via browser console or browser extension, open SIS and attempt to register for classes before your Time Ticket opens.
+Once the script is enabled via browser console or browser extension, open Ellucian SIS and attempt to register for classes before your Time Ticket opens.
 
 1. [Start here](https://sis9.rpi.edu/StudentRegistrationSsb/ssb/registration). You'll need to login with your RCSID to continue.
 2. Click "Register for Classes" as highlighted.
@@ -69,7 +72,7 @@ Once the script is enabled via browser console or browser extension, open SIS an
 
 - A modern browser (Chrome, Edge, Firefox, Chromium, Chromium-based, Firefox-based, etc.)
 - Tampermonkey browser extension (or any compatible UserScript manager), or Subscripts, or browser console access
-- An RCSID account with access to SIS
+- An RCSID account with access to Ellucian SIS
 - Primary user role as Student
 
 ## Install
@@ -91,12 +94,12 @@ Once the script is enabled via browser console or browser extension, open SIS an
 > [!IMPORTANT]
 > This process will need to be done on every page the system redirects you to.
 
-1. Open the browser console on the SIS registration page (right-click > Inspect > Console).
+1. Open the browser console on the Ellucian SIS registration page (right-click > Inspect > Console).
 2. Paste the script function into the console and press Enter to run.
 
 ## Permissions
 
-Prefill requires the following Tampermonkey permissions:
+Prefill requests the following Tampermonkey permissions. They are recommended but not required.
 
 - `GM_addStyle` - injects CSS to hide some spinners, notifications, and errors.
 
